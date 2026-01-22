@@ -2,6 +2,7 @@ package com.example.notes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -24,30 +25,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MainScreen() {
+fun HomeScreen(onAddClick: () -> Unit) {
 
     val noteslist = remember {
-        mutableStateListOf<NotesDetails>()
+        mutableStateListOf(NotesDetails(title = "TitleOne",content = "Very large content"),
+            NotesDetails(title = "TitleTwo",content = "Very small content"),
+                    NotesDetails(title = "TitleThree",content = "large content"))
     }
 
-    var showAddNote by remember { mutableStateOf(false) }
-
-    if(showAddNote){
-        AddNote {
-            showAddNote = false
-        }
-    }
-
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray)) {
-        LazyVerticalGrid(GridCells.Fixed(count = 2)){
-            items(noteslist){
-
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray)
+    ) {
+        LazyVerticalGrid(GridCells.Fixed(count = 2)) {
+            items(noteslist) {
+                    NotesDetails->
+                Column {
+                    Text(text = NotesDetails.title)
+                    Text(text = NotesDetails.content)
+                }
             }
         }
         Button(
-            onClick = { },
+            onClick = { onAddClick() },
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(50))
                 .align(Alignment.BottomEnd)
@@ -60,3 +61,4 @@ fun MainScreen() {
         }
     }
 }
+

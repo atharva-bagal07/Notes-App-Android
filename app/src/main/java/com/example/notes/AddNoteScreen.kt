@@ -1,13 +1,17 @@
 package com.example.notes
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
@@ -24,27 +28,54 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign.Companion.Start
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun AddNote(onBack: () -> Unit) {
-    val title by remember {
-        mutableStateOf("")
+    var title by remember {
+        mutableStateOf("Untitled")
     }
+
+    var showTitleDialog by remember { mutableStateOf(false) }
 
     var inputText by remember {
         mutableStateOf("")
     }
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray))
-    {
-        Column{
-            IconButton(onClick = { onBack }) {
-                Icons.Default.ArrowBack
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray)
+    ) {
+        Column {
+            Row {
+                Button(onClick = { onBack() }) {
+                    Text(text = "Back")
+                }
+                Spacer(modifier = Modifier.padding(horizontal = 124.dp))
+                Button(onClick = { showTitleDialog = true }) {
+                    Text(text = "Save")
+                }
             }
-            TextField(value = inputText , onValueChange = {inputText = it}, modifier = Modifier.fillMaxSize())
+            TextField(
+                value = inputText,
+                onValueChange = { inputText = it },
+                modifier = Modifier.fillMaxSize()
+            )
 
         }
+    }
+    if (showTitleDialog) {
+        AlertDialog(onDismissRequest = { showTitleDialog = false }, dismissButton = {
+            Button(onClick = { showTitleDialog = false }) {
+                Text(text = "Cancel")
+            }
+        }, title = {
+            TextField(value = title, onValueChange = { title = it })
+        }, confirmButton = {
+            Button(onClick = { }) {
+                Text(text = "Set Title")
+            }
+        })
     }
 }

@@ -3,8 +3,8 @@ package com.example.notes
 import java.util.Date
 
 data class NotesDetails(
-    val title: String,
+    var title: String = "Untitled",
     val content: String,
-    val date: Date
+    val date: Date? = null
 )
 
