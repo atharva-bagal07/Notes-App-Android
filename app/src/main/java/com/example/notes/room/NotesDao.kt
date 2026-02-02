@@ -2,17 +2,19 @@ package com.example.notes.room
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotesDao {
-    @Upsert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: NotesEntity)
+
     @Delete
     suspend fun deleteNote(note: NotesEntity)
 
-//    @Query("")
-//    suspend fun getAllNotes(): Flow<List<NotesEntity>>
+    @Query("SELECT * FROM Notes")
+    fun getAllNotes(): Flow<List<NotesEntity>>
 }
