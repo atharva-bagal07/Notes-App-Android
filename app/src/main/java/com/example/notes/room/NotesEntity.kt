@@ -12,4 +12,3 @@ data class NotesEntity(
     val content: String,
     val date: Long = System.currentTimeMillis()
 )
-
