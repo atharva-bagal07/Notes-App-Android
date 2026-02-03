@@ -37,8 +37,6 @@ class NotesViewModel(
                         isAddingNote = true
                     )
                 }
-
-            else -> Unit
         }
     }
 }
