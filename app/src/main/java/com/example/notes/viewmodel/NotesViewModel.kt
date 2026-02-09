@@ -3,7 +3,6 @@ package com.example.notes.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notes.room.NotesDao
-import com.example.notes.room.NotesEntity
 import com.example.notes.uistate.events.NotesEvent
 import com.example.notes.uistate.state.NotesState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,19 +36,19 @@ class NotesViewModel(
             }
 
             NotesEvent.SaveNote -> {
-                val title = state.value.title
-                val content = state.value.content
-
-                if (content.isBlank()) {
-                    return
-                }
-                val note = NotesEntity(
-                    title = title,
-                    content = content
-                )
-                viewModelScope.launch {
-                    dao.insertNote(note = note)
-                }
+//                val title = state.value.title
+//                val content = state.value.content
+//
+//                if (content.isBlank()) {
+//                    return
+//                }
+//                val note = NotesEntity(
+//                    title = title,
+//                    content = content
+//                )
+//                viewModelScope.launch {
+//                    dao.insertNote(note = note)
+//                }
                 _state.update {
                     it.copy(
                         isAddingNote = false,
