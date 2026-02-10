@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NotesDao {
     @Upsert
-    suspend fun insertNote(note: NotesEntity)
+    suspend fun upsertNote(note: NotesEntity)
 
     @Delete
     suspend fun deleteNote(note: NotesEntity)
 
     @Query("SELECT * FROM Notes")
-    fun getAllNotes(): Flow<List<NotesEntity>>
+    suspend fun getAllNotes(): Flow<List<NotesEntity>>
 }
