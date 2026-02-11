@@ -19,6 +19,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.notes.uistate.events.NotesEvent
+import com.example.notes.viewmodel.NotesViewModel
 
 @Composable
 fun AddNote(onBack: () -> Unit) {
@@ -28,9 +31,12 @@ fun AddNote(onBack: () -> Unit) {
 
     var showTitleDialog by remember { mutableStateOf(false) }
 
-    var inputText by remember {
+    var content by remember {
         mutableStateOf("")
     }
+
+    val viewmodel: NotesViewModel = viewModel()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,13 +48,16 @@ fun AddNote(onBack: () -> Unit) {
                     Text(text = "Back")
                 }
                 Spacer(modifier = Modifier.padding(horizontal = 124.dp))
-                Button(onClick = { showTitleDialog = true }) {
+                Button(onClick = {
+                    showTitleDialog = true
+
+                }) {
                     Text(text = "Save")
                 }
             }
             TextField(
-                value = inputText,
-                onValueChange = { inputText = it },
+                value = content,
+                onValueChange = { content = it },
                 modifier = Modifier.fillMaxSize()
             )
 
@@ -62,8 +71,14 @@ fun AddNote(onBack: () -> Unit) {
         }, title = {
             TextField(value = title, onValueChange = { title = it })
         }, confirmButton = {
-            Button(onClick = { }) {
-                Text(text = "Set Title")
+            Button(onClick = {
+                viewmodel.onEvent(NotesEvent.SaveNote(title, content))
+                showTitleDialog = false
+                onBack()
+                title = ""
+                content = ""
+            }) {
+                Text(text = "Save")
             }
         })
     }

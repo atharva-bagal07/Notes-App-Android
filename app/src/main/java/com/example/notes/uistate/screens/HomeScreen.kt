@@ -13,25 +13,23 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.notes.room.NotesEntity
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.notes.viewmodel.NotesViewModel
+
 
 @Composable
 fun HomeScreen(onAddClick: () -> Unit) {
 
-    val noteslist = remember {
-        mutableStateListOf(
-            NotesEntity(title = "TitleOne",content = "Very large content"),
-            NotesEntity(title = "TitleTwo",content = "Very small content"),
-                    NotesEntity(title = "TitleThree",content = "large content")
-        )
-    }
+
+    val viewModel: NotesViewModel = viewModel()
+    val state by viewModel.state.collectAsState()
 
     Box(
         modifier = Modifier
@@ -39,11 +37,10 @@ fun HomeScreen(onAddClick: () -> Unit) {
             .background(Color.DarkGray)
     ) {
         LazyVerticalGrid(GridCells.Fixed(count = 2)) {
-            items(noteslist) {
-                    NotesDetails->
+            items(state.allNotes) { notesDetails ->
                 Column {
-                    Text(text = NotesDetails.title)
-                    Text(text = NotesDetails.content)
+                    Text(text = notesDetails.title)
+                    Text(text = notesDetails.content)
                 }
             }
         }

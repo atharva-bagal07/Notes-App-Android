@@ -56,6 +56,9 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")  // Or latest
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("androidx.activity:activity-compose:1.9.3")

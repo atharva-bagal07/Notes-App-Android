@@ -7,6 +7,7 @@ import com.example.notes.room.NotesEntity
 import com.example.notes.uistate.events.NotesEvent
 import com.example.notes.uistate.state.NotesState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ class NotesViewModel(
 
 
     private val _state = MutableStateFlow(NotesState())
-    val state = _state.asStateFlow()
+    val state: StateFlow<NotesState> = _state.asStateFlow()
 
 
     init {
@@ -40,20 +41,12 @@ class NotesViewModel(
                 }
             }
 
-            NotesEvent.HideAddScreen -> {
-                _state.update {
-                    it.copy(
-                        isAddingNote = false
-                    )
-                }
-            }
+            is NotesEvent.SaveNote -> {
 
-            NotesEvent.SaveNote -> {
+                val title = event.title
+                val content = event.content
 
-                val title = _state.value.title
-                val content = _state.value.content
-
-                if (title.isBlank()) {
+                if (title.isBlank() || content.isBlank()) {
                     return
                 }
 
@@ -64,31 +57,9 @@ class NotesViewModel(
 
                 _state.update {
                     it.copy(
-                        title = "", content = "", isAddingNote = false
+                        isAddingNote = false
                     )
                 }
-            }
-
-            is NotesEvent.SetContent -> {
-                _state.update {
-                    it.copy(
-                        content = event.content
-                    )
-                }
-            }
-
-            is NotesEvent.SetTitle -> {
-                _state.update {
-                    it.copy(
-                        title = event.title
-                    )
-                }
-            }
-
-            NotesEvent.ShowAddScreen -> _state.update {
-                it.copy(
-                    isAddingNote = true
-                )
             }
         }
     }
