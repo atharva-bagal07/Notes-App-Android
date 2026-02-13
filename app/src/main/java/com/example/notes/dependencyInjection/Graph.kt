@@ -7,13 +7,13 @@ import com.example.notes.room.NotesDatabase
 
 object Graph {
 
-    lateinit var db: NotesDatabase
+    private lateinit var db: NotesDatabase
 
     val notesRepository by lazy {
-        NotesRepository(db.dao())
+        NotesRepository(db.notesDao())
     }
 
-    fun provide(context: Context) {
+    fun initializeDB(context: Context) {
         db = Room.databaseBuilder(
             context,
             NotesDatabase::class.java,

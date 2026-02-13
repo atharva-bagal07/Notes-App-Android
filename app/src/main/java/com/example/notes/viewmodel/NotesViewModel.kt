@@ -34,12 +34,12 @@ class NotesViewModel(
         contentState = title
     }
 
-    private lateinit var getAllNotes: Flow<List<NotesEntity>>
+    private lateinit var getAllNotesFlow: Flow<List<NotesEntity>>
 
     init {
         viewModelScope.launch {
-            getAllNotes = notesRepository.getAllNotes()
-            getAllNotes.collect { list ->
+            getAllNotesFlow = notesRepository.getAllNotes()
+            getAllNotesFlow.collect { list ->
                 _state.update {
                     it.copy(
                         allNotes = list
