@@ -20,15 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.notes.viewmodel.NotesViewModel
 
 
 @Composable
-fun HomeScreen(onAddClick: () -> Unit) {
+fun HomeScreen(viewModel: NotesViewModel, onAddClick: () -> Unit) {
 
-
-    val viewModel: NotesViewModel = viewModel()
     val state by viewModel.state.collectAsState()
 
     Box(
@@ -58,4 +55,3 @@ fun HomeScreen(onAddClick: () -> Unit) {
         }
     }
 }
-

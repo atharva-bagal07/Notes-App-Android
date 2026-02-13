@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,12 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.notes.uistate.events.NotesEvent
+import com.example.notes.room.NotesEntity
 import com.example.notes.viewmodel.NotesViewModel
 
 @Composable
-fun AddNote(onBack: () -> Unit) {
+fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
     var title by remember {
         mutableStateOf("Untitled")
     }
@@ -35,7 +35,7 @@ fun AddNote(onBack: () -> Unit) {
         mutableStateOf("")
     }
 
-    val viewmodel: NotesViewModel = viewModel()
+    val state by viewModel.state.collectAsState()
 
     Box(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun AddNote(onBack: () -> Unit) {
                     showTitleDialog = true
 
                 }) {
-                    Text(text = "Save")
+                    Text(text = "Add")
                 }
             }
             TextField(
@@ -64,22 +64,26 @@ fun AddNote(onBack: () -> Unit) {
         }
     }
     if (showTitleDialog) {
-        AlertDialog(onDismissRequest = { showTitleDialog = false }, dismissButton = {
-            Button(onClick = { showTitleDialog = false }) {
-                Text(text = "Cancel")
-            }
-        }, title = {
-            TextField(value = title, onValueChange = { title = it })
-        }, confirmButton = {
-            Button(onClick = {
-                viewmodel.onEvent(NotesEvent.SaveNote(title, content))
-                showTitleDialog = false
-                onBack()
-                title = ""
-                content = ""
-            }) {
-                Text(text = "Save")
-            }
-        })
+        AlertDialog(
+            onDismissRequest = { showTitleDialog = false },
+            dismissButton = {
+                Button(onClick = { showTitleDialog = false }) {
+                    Text(text = "Cancel")
+                }
+            },
+            title = {
+                TextField(value = title, onValueChange = { title = it })
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.addNote(NotesEntity(title = title, content = content))
+                    title = "Untitled"
+                    content = ""
+                    showTitleDialog = false
+                }
+                ) {
+                    Text(text = "Save")
+                }
+            })
     }
 }
