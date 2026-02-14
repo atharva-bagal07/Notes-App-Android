@@ -18,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.notes.room.NotesEntity
@@ -36,6 +38,7 @@ fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
     }
 
     val state by viewModel.state.collectAsState()
+    val focusRequester = remember { FocusRequester() }
 
     Box(
         modifier = Modifier
@@ -72,18 +75,27 @@ fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
                 }
             },
             title = {
-                TextField(value = title, onValueChange = { title = it })
+                TextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    modifier = Modifier.focusRequester(focusRequester)
+                )
             },
             confirmButton = {
                 Button(onClick = {
                     viewModel.addNote(NotesEntity(title = title, content = content))
-                    title = "Untitled"
-                    content = ""
                     showTitleDialog = false
+                    title = ""
+                    content = ""
+
                 }
                 ) {
                     Text(text = "Save")
                 }
             })
+//        LaunchedEffect(Unit) {
+//            delay(200) // Essential delay for Dialog transitions
+//            focusRequester.requestFocus()
+//        }
     }
 }
