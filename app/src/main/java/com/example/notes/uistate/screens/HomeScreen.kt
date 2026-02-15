@@ -31,9 +31,11 @@ import com.example.notes.viewmodel.NotesViewModel
 fun HomeScreen(viewModel: NotesViewModel, onAddClick: () -> Unit) {
 
     val state by viewModel.state.collectAsState()
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray)
+    ) {
         Box(
             modifier = Modifier
 

@@ -13,8 +13,6 @@ import com.example.notes.viewmodel.NotesViewModel
 fun Navigation() {
 
     val navController = rememberNavController()
-
-
     val viewModel: NotesViewModel = viewModel()
 
     NavHost(
