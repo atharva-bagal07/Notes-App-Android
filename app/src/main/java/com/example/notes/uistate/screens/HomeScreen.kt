@@ -24,11 +24,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.notes.room.NotesEntity
 import com.example.notes.viewmodel.NotesViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: NotesViewModel, onAddClick: () -> Unit) {
+fun HomeScreen(
+    viewModel: NotesViewModel,
+    onAddClick: (note: NotesEntity) -> Unit,
+    onNoteClick: (Int) -> Unit
+) {
 
     val state by viewModel.state.collectAsState()
     Column(
@@ -61,11 +66,18 @@ fun HomeScreen(viewModel: NotesViewModel, onAddClick: () -> Unit) {
                 .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 8.dp)
         ) {
             LazyVerticalGrid(GridCells.Fixed(count = 2)) {
-                items(state.allNotes) { notesDetails ->
+                items(state.allNotes) { note ->
                     Column {
-                        NoteCard(title = notesDetails.title, content = notesDetails.content) {
-                            viewModel.deleteNote(notesDetails)
-                        }
+                        NoteCard(note = note,
+                            onDelete = {
+                                viewModel.deleteNote(note)
+                            },
+                            onEdit = {
+                                viewModel.updateNote(note)
+                            }
+                        )
+
+
                     }
                 }
             }

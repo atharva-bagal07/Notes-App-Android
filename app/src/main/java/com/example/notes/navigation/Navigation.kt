@@ -2,10 +2,13 @@ package com.example.notes.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.notes.uistate.screens.AddNote
+import com.example.notes.uistate.screens.EditScreen
 import com.example.notes.uistate.screens.HomeScreen
 import com.example.notes.viewmodel.NotesViewModel
 
@@ -25,7 +28,30 @@ fun Navigation() {
                 viewModel = viewModel,
                 onAddClick = {
                     navController.navigate(Routes.AddNotesScreenRoute.route)
+                },
+                onNoteClick = { noteId ->
+                    navController.navigate("edit/$noteId")
                 }
+            )
+        }
+
+        composable(
+            route = "edit/{noteId}",
+            arguments = listOf(
+                navArgument("noteId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val noteId = backStackEntry.arguments?.getInt("noteId") ?: 0
+
+            EditScreen(
+                viewModel = viewModel,
+                onEditComplete = {
+                    navController.popBackStack()
+                },
+                id = noteId
             )
         }
 
@@ -33,9 +59,10 @@ fun Navigation() {
             AddNote(
                 viewModel = viewModel,
                 onBack = {
-                    navController.navigate(Routes.HomeScreenRoute.route)
+                    navController.popBackStack()
                 }
             )
         }
     }
+
 }
