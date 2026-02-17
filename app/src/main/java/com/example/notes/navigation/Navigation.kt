@@ -1,5 +1,9 @@
 package com.example.notes.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -12,11 +16,13 @@ import com.example.notes.uistate.screens.EditScreen
 import com.example.notes.uistate.screens.HomeScreen
 import com.example.notes.viewmodel.NotesViewModel
 
+
 @Composable
 fun Navigation() {
 
     val navController = rememberNavController()
     val viewModel: NotesViewModel = viewModel()
+
 
     NavHost(
         navController = navController,
@@ -38,11 +44,16 @@ fun Navigation() {
         composable(
             route = "edit/{noteId}",
             arguments = listOf(
-                navArgument("noteId") {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
+                navArgument("noteId") { type = NavType.IntType }
+            ),
+            enterTransition = {
+                scaleIn(initialScale = 0.9f) + fadeIn()
+            },
+            exitTransition = {
+                scaleOut(targetScale = 0.9f) + fadeOut()
+            }
+        )
+        { backStackEntry ->
 
             val noteId = backStackEntry.arguments?.getInt("noteId") ?: 0
 

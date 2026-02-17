@@ -24,14 +24,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.notes.room.NotesEntity
 import com.example.notes.viewmodel.NotesViewModel
 
 
 @Composable
 fun HomeScreen(
     viewModel: NotesViewModel,
-    onAddClick: (note: NotesEntity) -> Unit,
+    onAddClick: () -> Unit,
     onNoteClick: (Int) -> Unit
 ) {
 
@@ -73,7 +72,7 @@ fun HomeScreen(
                                 viewModel.deleteNote(note)
                             },
                             onEdit = {
-                                viewModel.updateNote(note)
+                                onNoteClick(note.id)
                             }
                         )
 
