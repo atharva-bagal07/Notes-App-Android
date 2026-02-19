@@ -26,13 +26,6 @@ class NotesViewModel(
 
     private val _state = MutableStateFlow(NotesState())
     val state: StateFlow<NotesState> = _state.asStateFlow()
-    fun onTitleChange(title: String) {
-        titleState = title
-    }
-
-    fun onContentChange(title: String) {
-        contentState = title
-    }
 
     private lateinit var getAllNotesFlow: Flow<List<NotesEntity>>
 
