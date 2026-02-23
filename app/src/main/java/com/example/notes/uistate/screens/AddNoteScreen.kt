@@ -42,7 +42,7 @@ fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.DarkGray)
+            .background(Color.Black)
     ) {
         Column {
             Row(
@@ -94,9 +94,5 @@ fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
                     Text(text = "Save")
                 }
             })
-//        LaunchedEffect(Unit) {
-//            delay(200) // Essential delay for Dialog transitions
-//            focusRequester.requestFocus()
-//        }
     }
 }
