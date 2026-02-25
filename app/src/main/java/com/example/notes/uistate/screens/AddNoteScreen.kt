@@ -34,6 +34,7 @@ import com.example.notes.viewmodel.NotesViewModel
 
 @Composable
 fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
+
     var title by remember {
         mutableStateOf("")
     }
@@ -154,6 +155,7 @@ fun AddNote(viewModel: NotesViewModel, onBack: () -> Unit) {
                         Text(text = "Save")
                     }
                 }
-            })
+            }
+        )
     }
 }

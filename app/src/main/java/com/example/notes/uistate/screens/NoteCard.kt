@@ -22,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notes.room.NotesEntity
@@ -54,9 +56,14 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
                 ) {
                     Text(
                         text = note.title,
-                        Modifier.padding(top = 16.dp, start = 16.dp),
+                        Modifier
+                            .padding(top = 16.dp, start = 16.dp)
+                            .weight(1f),
                         textAlign = TextAlign.Center,
-                        color = Color.Black, fontSize = 16.sp
+                        color = Color.Black, fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Spacer(modifier = Modifier.width(48.dp))
                     IconButton(onClick = {
@@ -73,10 +80,13 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
 
             Box(modifier = Modifier.weight(0.7f)) {
                 Text(
-                    text = note.content,
+                    text = note.content.trim(),
+                    fontSize = 14.sp,
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center,
                     color = Color.Black,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 4
                 )
             }
         }
