@@ -1,17 +1,20 @@
 package com.example.notes.uistate.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,16 +22,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.notes.viewmodel.NotesViewModel
 
 @Composable
 fun EditScreen(
     viewModel: NotesViewModel,
     id: Int,
-    onEditComplete: () -> Unit
+    onEditComplete: () -> Unit,
+    onBack: () -> Unit
 ) {
 
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     // Find the note using ID
     val note = state.allNotes.find { it.id == id }
@@ -46,11 +51,18 @@ fun EditScreen(
             .padding(16.dp)
     ) {
 
+
         TextField(
             value = title,
             onValueChange = { title = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Title") }
+            placeholder = { Text("Title") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.DarkGray,
+                unfocusedContainerColor = Color.DarkGray,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
+            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -61,23 +73,43 @@ fun EditScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            placeholder = { Text("Content") }
+            placeholder = { Text("Content") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.DarkGray,
+                unfocusedContainerColor = Color.DarkGray,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
+            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {
-                val updatedNote = note.copy(
-                    title = title,
-                    content = content
-                )
-                viewModel.updateNote(updatedNote)
-                onEditComplete()
-            },
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Save Changes")
+
+            Button(
+                onClick = {
+                    onBack()
+                }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD300))
+            ) {
+                Text("Back", color = Color.Black)
+            }
+            Button(
+                onClick = {
+                    val updatedNote = note.copy(
+                        title = title,
+                        content = content
+                    )
+                    viewModel.updateNote(updatedNote)
+                    onEditComplete()
+                }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD300))
+            ) {
+                Text("Save Changes", color = Color.Black)
+            }
         }
     }
 }

@@ -62,7 +62,8 @@ fun Navigation() {
                 onEditComplete = {
                     navController.popBackStack()
                 },
-                id = noteId
+                id = noteId,
+                onBack = { navController.popBackStack() }
             )
         }
 
