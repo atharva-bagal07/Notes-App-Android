@@ -18,4 +18,6 @@ class NotesRepository(private val notesDao: NotesDao) {
     suspend fun insertNote(note: NotesEntity) {
         notesDao.insertNote(note)
     }
+
+    fun getNotebyId(id: Int): Flow<NotesEntity> = notesDao.getNotebyId(id)
 }

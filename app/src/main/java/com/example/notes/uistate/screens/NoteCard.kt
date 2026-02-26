@@ -80,7 +80,7 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
 
             Box(modifier = Modifier.weight(0.7f)) {
                 Text(
-                    text = note.content.trim(),
+                    text = note.content.trimStart(),
                     fontSize = 14.sp,
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center,

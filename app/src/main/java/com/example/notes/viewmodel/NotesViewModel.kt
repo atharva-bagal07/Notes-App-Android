@@ -28,6 +28,8 @@ class NotesViewModel(
     val state: StateFlow<NotesState> = _state.asStateFlow()
 
     private lateinit var getAllNotesFlow: Flow<List<NotesEntity>>
+    private lateinit var getNotebyIdFlow: Flow<NotesEntity>
+
 
     init {
         viewModelScope.launch {
@@ -59,5 +61,6 @@ class NotesViewModel(
             notesRepository.deleteNote(note)
         }
     }
+
 
 }
