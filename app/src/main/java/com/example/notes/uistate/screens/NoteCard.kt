@@ -34,7 +34,7 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray,
+            containerColor = Color(0xFF48494B)
         ),
         modifier = Modifier
             .size(width = 240.dp, height = 180.dp)
@@ -60,7 +60,7 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
                             .padding(top = 16.dp, start = 16.dp)
                             .weight(1f),
                         textAlign = TextAlign.Center,
-                        color = Color.Black, fontSize = 16.sp,
+                        color = Color.White, fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -72,7 +72,7 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = null,
-                            tint = Color.Black
+                            tint = Color.White
                         )
                     }
                 }
@@ -84,7 +84,7 @@ fun NoteCard(note: NotesEntity, onDelete: () -> Unit, onEdit: () -> Unit) {
                     fontSize = 14.sp,
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.Black,
+                    color = Color.White.copy(alpha = 0.7f),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 4
                 )
