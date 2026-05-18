@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.notes.dependencyInjection.Graph
 import com.example.notes.repository.NotesRepository
 import com.example.notes.room.NotesEntity
-import com.example.notes.uistate.state.NotesState
+import com.example.notes.ui.state.NotesState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

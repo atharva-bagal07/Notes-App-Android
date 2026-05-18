@@ -1,4 +1,4 @@
-package com.example.notes.uistate.state
+package com.example.notes.ui.state
 
 import com.example.notes.room.NotesEntity
 

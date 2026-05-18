@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.notes.uistate.screens.AddNote
-import com.example.notes.uistate.screens.EditScreen
-import com.example.notes.uistate.screens.HomeScreen
+import com.example.notes.ui.screens.AddNote
+import com.example.notes.ui.screens.EditScreen
+import com.example.notes.ui.screens.HomeScreen
 import com.example.notes.viewmodel.NotesViewModel
 
 
